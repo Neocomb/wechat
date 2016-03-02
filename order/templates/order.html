@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+  <title>随堂预约</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico"> -->
+
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
+
+  <style >
+
+  h2 {
+    font-size: 50px;
+  }
+
+  .top-container{
+    background-color:#337ab7;
+    height:120px;
+  }
+
+  .login-btn{
+    margin: 50px 0;
+    font-size: 24px;
+    padding: 20px 0;
+  }
+  .content{
+    height:auto;
+  }
+  .select-btn{
+    padding:20px 80px;
+    font-size: 30px;
+  }
+  .caret{
+    border-top: 15px solid;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+  }
+  .content-item{
+    padding: 70px 0;
+  }
+  .content-left {
+    width:30%;
+    float: left;
+  }
+  .content-left-span{
+    font-size:30px;
+    float:right;
+    line-height:80px;
+    padding-right: 50px;
+  }
+  .content-right{
+    width:70%; 
+    float: left;
+  }
+  .logout,.history{
+    float:right;
+    font-size:30px;
+    color:#fff;
+    padding-top:70px;
+    padding-right:40px;
+  }
+
+  </style>
+</head>
+
+<body>
+  <div class="top-container">
+    <div class="logout">
+      注销
+    </div>
+    <div class="history">
+      预约历史
+    </div>
+  </div>
+  <div class="content">
+  <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">周次:</span>
+    </div>
+    <div class="dropdown content-right">
+      <button class="btn btn-default dropdown-toggle select-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">选择周次<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#">第一周</a></li>
+        <li><a href="#">第二周</a></li>
+        <li><a href="#">第三周</a></li>
+        <li><a href="#">第四周</a></li>
+        <li><a href="#">第五周</a></li>
+        <li><a href="#">第六周</a></li>
+        <li><a href="#">第七周</a></li>
+        <li><a href="#">第八周</a></li>
+        <li><a href="#">第九周</a></li>
+        <li><a href="#">第十周</a></li>
+        <li><a href="#">第十一周</a></li>
+        <li><a href="#">第十二周</a></li>
+        <li><a href="#">第十三周</a></li>
+        <li><a href="#">第十四周</a></li>
+        <li><a href="#">第十五周</a></li>
+        <li><a href="#">第十六周</a></li>
+      </ul>
+    </div>
+    </div>
+    
+    <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">日期:</span>
+    </div>
+    <div class="dropdown content-right">
+      <button class="btn btn-default dropdown-toggle select-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">选择日期<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#">周一</a></li>
+        <li><a href="#">周二</a></li>
+        <li><a href="#">周三</a></li>
+        <li><a href="#">周四</a></li>
+        <li><a href="#">周五</a></li>
+        <li><a href="#">周六</a></li>
+        <li><a href="#">周日</a></li>
+      </ul>
+    </div>
+    </div>
+
+    <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">时间:</span>
+    </div>
+    <div class="dropdown content-right">
+      <button class="btn btn-default dropdown-toggle select-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">选择日期<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#">第一节</a></li>
+        <li><a href="#">第二节</a></li>
+        <li><a href="#">第三节</a></li>
+        <li><a href="#">第四节</a></li>
+        <li><a href="#">第五节</a></li>
+        <li><a href="#">第六节</a></li>
+        <li><a href="#">第七节</a></li>
+      </ul>
+    </div>
+    </div>
+
+    <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">教室:</span>
+    </div>
+    <div class="dropdown content-right">
+      <button class="btn btn-default dropdown-toggle select-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">选择教室<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#">SX101</a></li>
+        <li><a href="#">SX105</a></li>
+        <li><a href="#">SX106</a></li>
+        <li><a href="#">SX107</a></li>
+        <li><a href="#">SX201</a></li>
+        <li><a href="#">SX202</a></li>
+        <li><a href="#">SX204</a></li>
+      </ul>
+     </div>
+     </div>
+
+    <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">类别:</span>
+    </div>
+    <div class="dropdown content-right">
+      <button class="btn btn-default dropdown-toggle select-btn" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">选择实验类别<span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li><a href="#">力学</a></li>
+        <li><a href="#">电磁学</a></li>
+        <li><a href="#">热学</a></li>
+        <li><a href="#">振动与波</a></li>
+        <li><a href="#">光学</a></li>
+        <li><a href="#">近代与综合</a></li>
+      </ul>
+     </div>
+     </div>
+
+    <div class="image">
+      <img src="{{url_for('static', filename='img/仪器照片/1转盘科式力.jpg')}}">
+      <span> 转盘科式力 </span>
+    </div> 
+
+  </div>
+
+
+</body>
+
+</html>
+

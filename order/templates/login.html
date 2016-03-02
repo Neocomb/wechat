@@ -1,10 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Login</title>
+<html>
+<head lang="zh">
+  <title>随堂预约</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico"> -->
+
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
+
+  <style >
+  body{
+    background-color: #f1f7f1;
+  }
+  h2 {
+    font-size: 50px;
+  }
+  .top-container{
+    width:100%;
+    height:450px;
+  }
+  .top-img{
+    width:100%;
+    height:100%;
+  }
+  .login-btn{
+    margin: 50px 0;
+    font-size: 24px;
+    padding: 20px 0;
+  }
+  </style>
 </head>
+
 <body>
-<h1>Login</h1>
+  <div class="top-container">
+    <img src="{{url_for('static', filename='img/bjtu.png')}}" class="top-img">
+  </div>
+  <div class="content">
+    <form class="form-signin" action="" method="post">
+      <h2 class="form-signin-heading">物理随堂演示实现预约</h2>
+      <label for="username" class="sr-only">username</label>
+      <input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
+      <label for="password" class="sr-only">Password</label>
+      <input type="password" name="password" class="form-control" placeholder="密码" required>
+      
+      <button class="btn btn-lg btn-primary btn-block login-btn" type="submit">登录</button>
+    </form>
+  </div>
 </body>
+
 </html>
+
