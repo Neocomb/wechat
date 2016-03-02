@@ -1,9 +1,22 @@
+from datetime import time
+
 from order import wechat
 from order.models import User
 from order.webapp import app
 from flask import render_template, request, jsonify
 from flask import abort, session, redirect, url_for
 from functools import wraps
+
+
+
+def handle_message_text(msg):
+    resp = wechat.make_base_reply_message_from_message(msg)
+    resp.update({
+        'MsgType': 'text',
+        'CreateTime': int(time.time()),
+        'Content': msg['Content'],
+    })
+    return wechat.dict_to_xml_string(resp)
 
 
 @app.route('/wx/event', methods=['POST'])
@@ -13,6 +26,11 @@ def handle_event():
     echostr = request.args.get('echostr', '')
     if echostr:
         return echostr
+    msg = wechat.xml_string_to_dict(request.data.decode(wechat.DEFAULT_ENCODING))
+    if msg['MsgType'] == 'text':
+        return handle_message_text(msg)
+    else:
+        return ''
 
 
 def login_required(f):
@@ -26,7 +44,7 @@ def login_required(f):
     return decorated_function
 
 
-@app.route('/order/user', methods=['get'])
+@app.route('/order/user', methods=['GET'])
 def user_login():
     username = request.args.get('username')
     password = request.args.get('password')
@@ -58,7 +76,6 @@ def user_registe():
     return render_template('/login.html')
 
 
-@app.route('/order/index', methods=['get'])
-@login_required
+@app.route('/order/index', methods=['GET'])
 def index():
     return "hello world"
