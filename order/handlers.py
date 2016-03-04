@@ -1,5 +1,4 @@
-from datetime import time
-
+import time
 from order import wechat
 from order.models import User
 from order.webapp import app

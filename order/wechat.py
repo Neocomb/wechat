@@ -1,4 +1,5 @@
 import hashlib
+import time
 import requests
 from lxml import etree
 from .webapp import app
