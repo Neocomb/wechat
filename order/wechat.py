@@ -175,7 +175,7 @@ def refresh_access_token():
     params = {
         'grant_type': 'client_credential',
         'appid': app.config['WX_APPID'],
-        'secret': app.config['WX_APPSECRET']
+        'secret': app.config['WX_APP_SECRET']
     }
     ret, _ = do_request('grant_client_credential', params, need_access_token=False)
     WECHAT_TOKEN = ret['access_token']

@@ -12,7 +12,7 @@ app.config.update({
 })
 
 def setup():
-    app.config.from_pyfile("../debug.cfg")
+    app.config.from_pyfile("../release.cfg")
 
     mongo.init_app(app)
     from . import handlers
