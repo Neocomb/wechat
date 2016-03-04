@@ -8,7 +8,6 @@ from flask import abort, session, redirect, url_for
 from functools import wraps
 
 
-
 def handle_message_text(msg):
     resp = wechat.make_base_reply_message_from_message(msg)
     resp.update({
@@ -79,3 +78,8 @@ def user_registe():
 @app.route('/order/index', methods=['GET'])
 def index():
     return "hello world"
+
+
+@app.route('/wx/refresh_token')
+def refresh_token():
+    wechat.refresh_access_token()

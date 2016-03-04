@@ -169,3 +169,14 @@ def do_request(api_name, query_params=None, data=None, json_data=None, files=Non
         return response.json(), response
     else:
         return response.content, response
+
+
+def refresh_access_token():
+    params = {
+        'grant_type': 'client_credential',
+        'appid': app.config['WX_APPID'],
+        'secret': app.config['WX_APPSECRET']
+    }
+    ret, _ = do_request('grant_client_credential', params, need_access_token=False)
+    WECHAT_TOKEN = ret['access_token']
+    return ret['access_token']
