@@ -1,6 +1,9 @@
+import json
 import time
+from collections import Set
+
 from order import wechat
-from order.models import User
+from order.models import User, Lesson
 from order.webapp import app
 from flask import render_template, request, jsonify
 from flask import abort, session, redirect, url_for
@@ -37,7 +40,7 @@ def login_required(f):
         if 'username' not in session:
             return redirect(url_for('user_login'))
         else:
-            return f(*args, **kwargs)
+            return redirect(url_for('/wx/order/index'))
 
     return decorated_function
 
@@ -74,11 +77,52 @@ def user_registe():
     return render_template('/login.html')
 
 
-@app.route('/order/index', methods=['GET'])
-def index():
-    return "hello world"
-
-
 @app.route('/wx/refresh_token')
 def refresh_token():
     wechat.refresh_access_token()
+
+
+@app.route('/wx/order/index', methods=['GET'])
+@app.route('/wx/order/lesson')
+@login_required
+def get_lesson():
+    subject = request.args.get("subject")
+
+    if not subject:
+        lessons = Lesson.load_all()
+    else:
+        lessons = Lesson.load_by_subject(subject)
+
+    subs = set()
+    for les in lessons:
+        subs.add(les.name)
+
+    return render_template("lesson.html", lessons=lessons, subjects=subs)
+
+
+@app.route('/wx/order/time')
+@login_required
+def get_time():
+    times = [
+        "8:00  : 10:00",
+        "10:00 : 12:00",
+        "12:00 : 14:00",
+        "14:00 : 16:00",
+    ]
+    return render_template("time.html", times=times)
+
+
+@app.route('/wx/create_menu')
+def create_menu():
+    menu_json = {
+        "button": [
+            {
+                "name": "order",
+                "key": "MENU_HISTORY_EVERYDAY",
+                "url": app.config['BASE_URL'] + "/wx/order/index"
+            }
+
+        ]
+    }
+    wechat.do_request('create_menu', json_data=menu_json)
+    return jsonify(status=0)

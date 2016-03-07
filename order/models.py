@@ -4,6 +4,7 @@ from mongoalchemy.document import Index
 
 mongo = MongoAlchemy()
 
+
 class User(mongo.Document):
     username = mongo.StringField()
     password = mongo.StringField()
@@ -14,3 +15,18 @@ class User(mongo.Document):
     @classmethod
     def load_one(cls, username, password):
         return cls.query.filter({"username": username, "password": password}).first()
+
+
+class Lesson(mongo.Document):
+
+    num = mongo.StringField()
+    subject = mongo.StringField()
+    name = mongo.StringField()
+
+    @classmethod
+    def load_by_subject(cls, subject):
+        return cls.query.filter({"subject": subject})
+
+    @classmethod
+    def load_all(cls):
+        return cls.query.all()

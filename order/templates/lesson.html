@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+
+<select>
+  {% for sub in subjects %}
+  <option>{{ sub }}</option>
+  {% endfor %}
+</select>
+
+{% for les in lessons%}
+{{ les.name }}<br>
+{% endfor %}
+
+
+<a href="{{ url_for('get_time') }}">next</a>
+</body>
+</html>
