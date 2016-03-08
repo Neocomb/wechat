@@ -1,6 +1,4 @@
-import json
 import time
-from collections import Set
 
 from order import wechat
 from order.models import User, Lesson

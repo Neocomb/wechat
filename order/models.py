@@ -30,7 +30,3 @@ class Lesson(mongo.Document):
     @classmethod
     def load_all(cls):
         return cls.query.all()
-
-
-class Token(mongo.Document)
-    key = mongo.StringField()
