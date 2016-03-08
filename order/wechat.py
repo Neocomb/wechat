@@ -180,5 +180,5 @@ def refresh_access_token():
         'secret': app.config['WX_APP_SECRET']
     }
     ret, _ = do_request('grant_client_credential', params, need_access_token=False)
-    WECHAT_TOKEN = ret['access_token']
+    wechat.WECHAT_TOKEN = ret['access_token']
     return ret['access_token']

@@ -77,7 +77,7 @@ def user_registe():
 
 @app.route('/wx/refresh_token')
 def refresh_token():
-    wechat.refresh_access_token()
+    return wechat.refresh_access_token()
 
 
 @app.route('/wx/order/index', methods=['GET'])
