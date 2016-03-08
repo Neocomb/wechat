@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh">
+  <title>随堂预约</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico"> -->
+
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
+
+  <style >
+  body{
+    background-color: #f1f7f1;
+    font-size: 30px;
+  }
+  h2 {
+    font-size: 40px;
+  }
+  .top-container{
+    width:100%;
+  }
+  .top-img{
+    width:100%;
+    height:100%;
+  }
+  .table {
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  caption {
+    padding-top: 50px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color:#333;
+  }
+  </style>
+</head>
+
+<body>
+  <div class="top-container">
+    <img src="{{url_for('static', filename='img/logo.png')}}" class="top-img">
+  </div>
+  <div class="content">
+    <table class="table table-striped">
+      <caption>预约记录</caption>
+      <thead>
+        <tr>
+          <th>时间地点</th>
+          <th>实验类别与名称</th>
+          <th>图片</th>
+          <th>状态</th>
+        </tr>
+     </thead>
+     <tbody>
+        <tr>
+          <td>
+            <div>第一周</div>
+            <div>星期一</div>
+            <div>第四节</div>
+            <div>XS204</div>
+          </td>
+          <td>
+            <div>力学</div>
+            <div>转盘科式力</div>
+          </td>
+          <td><img src="{{url_for('static', filename='img/仪器照片/1转盘科式力.jpg')}}"></td>
+          <td>删除</td>
+        </tr>
+        <tr>
+          <td>
+            <div>第一周</div>
+            <div>星期一</div>
+            <div>第四节</div>
+            <div>XS204</div>
+          </td>
+          <td>
+            <div>力学</div>
+            <div>转盘科式力</div>
+          </td>
+          <td><img src="{{url_for('static', filename='img/仪器照片/1转盘科式力.jpg')}}"></td>
+          <td>删除</td>
+        </tr>
+        <tr>
+          <td>
+            <div>第一周</div>
+            <div>星期一</div>
+            <div>第四节</div>
+            <div>XS204</div>
+          </td>
+          <td>
+            <div>力学</div>
+            <div>转盘科式力</div>
+          </td>
+          <td><img src="{{url_for('static', filename='img/仪器照片/1转盘科式力.jpg')}}"></td>
+          <td>删除</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
+
