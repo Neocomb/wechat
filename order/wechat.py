@@ -3,6 +3,7 @@ import time
 import requests
 from lxml import etree
 from .webapp import app
+from flask import json
 
 DEFAULT_ENCODING = 'utf-8'
 WECHAT_TOKEN = ''
