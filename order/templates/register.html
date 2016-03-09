@@ -9,43 +9,43 @@
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
 
-  <style >
-  body{
+  <style>
+    body{
     background-color: #f1f7f1;
-  }
-  h2 {
+    }
+    h2 {
     font-size: 40px;
-  }
-  .top-container{
+    }
+    .top-container{
     width:100%;
-  }
-  .top-img{
+    }
+    .top-img{
     width:100%;
     height:100%;
-  }
-  .login-btn{
+    }
+    .login-btn{
     margin: 50px 0;
     font-size: 24px;
     padding: 20px 0;
-  }
+    }
   </style>
 </head>
 
 <body>
-  <div class="top-container">
-    <img src="{{url_for('static', filename='img/lab.jpg')}}" class="top-img">
-  </div>
-  <div class="content">
-    <form class="form-signin" action="{{ url_for(user_login) }}" method="post">
-      <h2 class="form-signin-heading">大学物理随堂演示实验预约系统</h2>
-      <label for="username" class="sr-only">username</label>
-      <input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
-      <label for="password" class="sr-only">Password</label>
-      <input type="password" name="password" class="form-control" placeholder="密码" required>
-      
-      <button class="btn btn-lg btn-primary btn-block login-btn" type="submit">登录</button>
-    </form>
-  </div>
+<div class="top-container">
+  <img src="{{url_for('static', filename='img/lab.jpg')}}" class="top-img">
+</div>
+<div class="content">
+  <form class="form-signin" action="{{ url_for('user_register_post') }}" method="post">
+    <h2 class="form-signin-heading">大学物理随堂演示实验预约系统</h2>
+    <label for="username" class="sr-only">username</label>
+    <input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" name="password" class="form-control" placeholder="密码" required>
+
+    <button class="btn btn-lg btn-primary btn-block login-btn" type="submit">注册</button>
+  </form>
+</div>
 </body>
 
 </html>

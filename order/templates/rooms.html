@@ -7,12 +7,12 @@
 <body>
 
 
-{% for sub in subjects %}
-<h3><a href="{{ url_for('get_lesson',subject=sub) }}">{{ sub }}</a></h3>
+{% for building in buildings %}
+<h3><a href="{{ url_for('get_room',building=building) }}">{{ building }}</a></h3>
 {% endfor %}
 
-{% for les in lessons%}
-<a href="{{ url_for('get_time', lesson=les.name ) }}">{{ les.name }}</a><br>
+{% for room in rooms%}
+<a href="{{ url_for('get_time', place=room.building+room.room ) }}">{{ room.room }}</a><br>
 {% endfor %}
 
 </body>

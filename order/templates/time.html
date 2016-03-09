@@ -6,13 +6,9 @@
 </head>
 <body>
 
-<select>
   {% for time in times%}
-  <option>
-    {{ time }}
-  </option>
+    <h1><a href="{{ url_for('get_lesson', time=time ) }}">{{ time }}</a><h1>
   {% endfor %}
-</select>
 
 
 </body>

@@ -6,17 +6,15 @@
 </head>
 <body>
 
-<select>
-  {% for sub in subjects %}
-  <option>{{ sub }}</option>
-  {% endfor %}
-</select>
 
-{% for les in lessons%}
-{{ les.name }}<br>
+{% for sub in subjects %}
+<h3><a href="{{ url_for('get_lesson',subject=sub) }}">{{ sub }}</a></h3>
 {% endfor %}
 
+{% for les in lessons%}
+<img src="{{ url_for('static',filename='img/wx000%d.jpg'|format(les.num|int) ) }}">
+<a href="{{ url_for('get_order', lesson=les.subject+les.name ) }}">{{ les.name }}</a><br>
+{% endfor %}
 
-<a href="{{ url_for('get_time') }}">next</a>
 </body>
 </html>
