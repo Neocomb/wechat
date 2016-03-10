@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html dir="ltr" lang="en-US">
 <head lang="zh">
   <title>随堂预约</title>
   <meta charset="utf-8">
@@ -7,7 +7,13 @@
   <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico"> -->
 
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/daterangepicker-bs3.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/moment.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
 
   <style >
   body{
@@ -16,6 +22,9 @@
   }
   h2 {
     font-size: 40px;
+  }
+  img {
+    width: 70%;
   }
   .top-container{
     width:100%;
@@ -36,14 +45,55 @@
     font-weight: bold;
     color:#333;
   }
+  .well{
+    width: 70%;
+    float:left;
+  }
+    .logout,.history{
+    float:right;
+    font-size:30px;
+    padding-right:40px;
+    padding-bottom:40px;
+  }
   </style>
 </head>
 
 <body>
   <div class="top-container">
     <img src="{{url_for('static', filename='img/logo.png')}}" class="top-img">
+    <div class="logout">
+      {% if session.username is none%}
+        <a href="" id="signin">登录</a>  
+      {% else %} 
+        <a href="{{url_for('logout')}}" id="signout">注销</a>   
+      {% endif %} 
+    </div>
+    <div class="history">
+      <a href="{{ url_for('index') }}">开始预约</a>
+    </div>
   </div>
   <div class="content">
+
+  <div class="well">
+    <form class="form-horizontal">
+      <fieldset>
+        <div class="control-group"> 
+          <div class="controls">
+            <div class="input-prepend input-group">
+              <span class="add-on input-group-addon">
+                <i class="glyphicon glyphicon-calendar fa fa-calendar">
+                </i>
+              </span>
+              <input type="text" style="width: 200px" name="reservation" id="reservation"
+                    class="form-control" value="03/18/2013 - 03/23/2013" />
+              </div>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>  
+
+
     <table class="table table-striped">
       <caption>预约记录</caption>
       <thead>
@@ -55,51 +105,35 @@
         </tr>
      </thead>
      <tbody>
+        {% for order in orders %}
         <tr>
           <td>
-            <div>第一周</div>
-            <div>星期一</div>
-            <div>第四节</div>
-            <div>XS204</div>
+            <div>{{ order.week }}</div>
+            <div>{{ order.day }}</div>
+            <div>{{ order.time }}</div>
+            <div>{{ order.classroom }}</div>
           </td>
           <td>
-            <div>力学</div>
-            <div>转盘科式力</div>
+            <div>{{ order.subject }}</div>
+            <div>{{ order.lesson }}</div>
           </td>
-          <td><img src="{{url_for('static', filename='img/仪器照片/1转盘科式力.jpg')}}"></td>
+          <td><img src="{{url_for('static', filename='img/wx000%s.jpg'|format(order.lesson_num|string))}}"></td>
           <td>删除</td>
         </tr>
-        <tr>
-          <td>
-            <div>第一周</div>
-            <div>星期一</div>
-            <div>第四节</div>
-            <div>XS204</div>
-          </td>
-          <td>
-            <div>力学</div>
-            <div>转盘科式力</div>
-          </td>
-          <td><img src="{{url_for('static', filename='img/仪器照片/1转盘科式力.jpg')}}"></td>
-          <td>删除</td>
-        </tr>
-        <tr>
-          <td>
-            <div>第一周</div>
-            <div>星期一</div>
-            <div>第四节</div>
-            <div>XS204</div>
-          </td>
-          <td>
-            <div>力学</div>
-            <div>转盘科式力</div>
-          </td>
-          <td><img src="{{url_for('static', filename='img/仪器照片/1转盘科式力.jpg')}}"></td>
-          <td>删除</td>
-        </tr>
+        {% endfor %}
+        
       </tbody>
     </table>
   </div>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('#reservation').daterangepicker(null,
+      function(start, end, label) {
+        console.log(start.toISOString(), end.toISOString(), label);
+      });
+    });
+  </script>
 </body>
 
 </html>

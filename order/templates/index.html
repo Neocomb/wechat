@@ -1,11 +1,188 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+<html>
+<head lang="zh">
+  <title>随堂预约</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico"> -->
 
-<h1><a href="{{ url_for('get_room') }}">预定</a></h1>
+
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+  <style >
+
+  h2 {
+    text-align: center;
+  }
+
+/*   .top-container{
+    background-color:#337ab7;
+    height:120px;
+  }
+ */    
+ .top-container{
+    width:100%;
+    clear:both;
+  }
+  .top-img{
+    width:100%;
+    height:100%;
+  }
+
+  .login-btn {
+    margin: 50px auto;
+    font-size: 24px;
+    padding: 20px 0;
+    width: 50%;
+  }
+  .content{
+    height:auto;
+    margin-top:90px;
+  }
+  .select-btn{
+    padding:20px 80px;
+    font-size: 30px;
+  }
+  .caret{
+    border-top: 15px solid;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+  }
+  .content-item{
+    padding: 70px 0;
+  }
+  .content-left {
+    width:30%;
+    float: left;
+  }
+  .content-left-span{
+    font-size:30px;
+    float:right;
+    line-height:80px;
+    padding-right: 50px;
+  }
+  .content-right{
+    width:70%; 
+    float: left;
+  }
+  .logout,.history{
+    float:right;
+    font-size:30px;
+    padding-right:40px;
+    padding-bottom:40px;
+  }
+  .form-control{
+    position: absolute;
+    width:60%;
+    height:60px;
+    font-size:20px;
+  }
+
+  </style>
+</head>
+
+<body>
+<div class="top-container">
+  <img src="{{url_for('static', filename='img/logo.png')}}" class="top-img">
+  <div class="logout">
+    {% if session.username is none%}
+      <a href="" id="signin">登录</a>  
+    {% else %} 
+      <a href="{{url_for('logout')}}" id="signout">注销</a>   
+    {% endif %} 
+  </div>
+  <div class="history">
+    <a href="{{ url_for('get_history') }}">预约历史</a>
+  </div>
+</div>
+
+  
+<div class="content">
+  <h2>请选择时间地点</h2>
+  <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">周次:</span>
+    </div>
+    <div class="content-right">
+      <select class="form-control" id="select_week">
+        {% for week in weeks%}
+        <option>{{ week }}</option>
+        {% endfor %}
+      </select> 
+    </div>
+  </div>
+    
+  <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">日期:</span>
+    </div>
+    <div class="content-right">
+      <select class="form-control" id="select_day">
+        {% for day in days%}
+        <option>{{ day }}</option>
+        {% endfor %}
+      </select> 
+    </div>
+  </div>
+
+  <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">时间:</span>
+    </div>
+    <div class="content-right">
+      <select class="form-control" id="select_time">
+        {% for time in times%}
+        <option>{{ time }}</option>
+        {% endfor %}
+      </select> 
+    </div>
+  </div>
+
+  <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">教室:</span>
+    </div>
+    <div class="content-right">
+      <select class="form-control" id="select_classroom">
+        {% for classroom in classrooms%}
+        <option>{{ classroom }}</option>
+        {% endfor %}
+      </select> 
+    </div>
+  </div>
+
+  <div class="content-item">
+    <div class="content-left">
+      <span class="content-left-span">实验类别:</span>
+    </div>
+    <div class="content-right">
+      <select class="form-control" id="select_subject">
+        {% for subject in subjects%}
+        <option>{{ subject }}</option>
+        {% endfor %}
+      </select> 
+    </div>
+  </div>
+
+  <button class="btn btn-lg btn-primary btn-block login-btn" onclick="chg()" id="button_next">下一步</button>
+  <!-- <a href="{{ url_for('get_equipment', time=time ) }}" class="btn btn-lg btn-primary btn-block login-btn">下一步</a> -->
+</div>
+
+<script type="text/javascript">
+  function chg() {
+    var week = $('#select_week option:selected').text();
+    var day = $('#select_day option:selected').text();
+    var time = $('#select_time option:selected').text();
+    var classroom = $('#select_classroom option:selected').text();
+    var subject = $('#select_subject option:selected').text();
+    location.href = "/wx/order/equipment?week="+week+"&day="+day+"&time="+time+"&classroom="+classroom+"&subject="+subject;
+  }
+  
+</script>
 </body>
+
 </html>
+

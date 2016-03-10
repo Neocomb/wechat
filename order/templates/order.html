@@ -1,19 +1,118 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+<html>
+<head lang="zh">
+  <title>随堂预约</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico"> -->
+
+
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+  <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+
+  <style >
+
+  h2 {
+    text-align: center;
+  }
+
+/*   .top-container{
+    background-color:#337ab7;
+    height:120px;
+  }
+ */    
+ .top-container{
+    width:100%;
+    clear:both;
+  }
+  .top-img{
+    width:100%;
+    height:100%;
+  }
+
+  .login-btn {
+    margin: 50px auto;
+    font-size: 24px;
+    padding: 20px 0;
+    width: 50%;
+  }
+  .content{
+    height:auto;
+    margin-top:90px;
+    width:70%;
+    margin-left:auto;
+  }
+  .select-btn{
+    padding:20px 80px;
+    font-size: 30px;
+  }
+  .caret{
+    border-top: 15px solid;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+  }
+  .content-item{
+    padding: 70px 0;
+  }
+  .content-left {
+    width:30%;
+    float: left;
+  }
+  .content-left-span{
+    font-size:30px;
+    float:right;
+    line-height:80px;
+    padding-right: 50px;
+  }
+  .content-right{
+    width:70%; 
+    float: left;
+  }
+  .logout,.history{
+    float:right;
+    font-size:30px;
+    padding-right:40px;
+    padding-bottom:40px;
+  }
+  .form-control{
+    position: absolute;
+    width:60%;
+    height:60px;
+    font-size:20px;
+  }
+
+  </style>
 </head>
+
 <body>
+<div class="top-container">
+  <img src="{{url_for('static', filename='img/logo.png')}}" class="top-img">
+  <div class="logout">
+    {% if session.username is none%}
+      <a href="" id="signin">登录</a>  
+    {% else %} 
+      <a href="{{url_for('logout')}}" id="signout">注销</a>   
+    {% endif %} 
+  </div>
+  <div class="history">
+    <a href="{{ url_for('get_history') }}">预约历史</a>
+  </div>
+</div>
+<div class="content">
+  <h3>用户  {{order.username}}，您的预约信息如下</h3>
+  <h3>周次：  {{order.week}}</h3>
+  <h3>日期：  {{order.day}}</h3>
+  <h3>时间：  {{order.time}}</h3>
+  <h3>教室：  {{order.classroom}}</h3>
+  <h3>实验类别：  {{order.subject}}</h3>
+  <h3>实验名称：  {{order.lesson}}</h3>
+	
+</div>
 
-
-<h1>Orders</h1>
-{% for order in orders %}
-<div>time : {{ order.time }}</div>
-<div>place : {{ order.place }}</div>
-<div>lesson : {{ order.lesson }}</div>
-<div>user : {{ order.user }}</div>
-{% endfor %}
 
 </body>
+
 </html>
+
