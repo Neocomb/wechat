@@ -1,1 +1,1 @@
-PYTHONPATH=. python order/startup.py
+PYTHONPATH=. python3.4 order/startup.py
