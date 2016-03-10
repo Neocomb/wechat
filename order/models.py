@@ -49,9 +49,15 @@ class Room(mongo.Document):
 
 
 class Order(mongo.Document):
+    week = mongo.StringField()
+    day = mongo.StringField()
     time = mongo.StringField()
-    place = mongo.StringField()
+    classroom = mongo.StringField()
+    subject = mongo.StringField()
     lesson = mongo.StringField()
+    lesson_num = mongo.StringField()
+    # order_create_time = mongo.DateTimeField()
+    # order_book_time = mongo.DateTimeField()
     user = mongo.StringField()
 
     @classmethod
