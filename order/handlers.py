@@ -55,6 +55,10 @@ def user_login_post():
 
 
 @app.route('/', methods=['GET', 'POST'])
+def home():
+    return "<a href='/index'>预定</a>"
+
+
 @app.route('/index', methods=['GET', 'POST'])
 @app.route('/order/index', methods=['GET'])
 @login_required
