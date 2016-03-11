@@ -3,7 +3,8 @@ from order.webapp import app
 from flask import render_template, request, jsonify
 from flask import abort, session, redirect, url_for
 from functools import wraps
-
+from datetime import * 
+import time 
 
 def login_required(f):
     @wraps(f)
@@ -126,29 +127,59 @@ def get_history():
 @app.route('/wx/order/order')
 @login_required
 def get_order():
-    lesson = request.args.get("lesson")
-    lesson_num = request.args.get("lesson_num")
-
-    if lesson and lesson_num and session['week'] and session['day'] and session['time'] and session['classroom'] and session['subject']:
+    # lesson = request.args.get("lesson")
+    # lesson_num = request.args.get("lesson_num")
+    lessons = request.args.get("lessons")
+    order_date = calculate_date(session['week'],session['day'])
+    now_date = datetime.today()
+    if lessons and session['week'] and session['day'] and session['time'] and session['classroom'] and session['subject']:
         order = {
             'week' : session['week'],
             'day' : session['day'],
             'time' : session['time'],
             'classroom' : session['classroom'],
             'subject' : session['subject'],
-            'lesson' : lesson,
-            'lesson_num' : lesson_num,
-            'username' : session['username']
+            'lessons' : lessons,
+            'username' : session['username'],
+            'order_date':order_date,
+            'now_date':now_date
         }
-        Order(lesson_num=lesson_num, week=session['week'], day=session['day'], time=session['time'], classroom=session['classroom'], subject=session['subject'], lesson=lesson, user=session['username']).save()
+        
+        Order(lessons=lessons,  week=session['week'], day=session['day'], time=session['time'], classroom=session['classroom'], subject=session['subject'], user=session['username'],order_date=order_date,now_date=now_date).save()
         session['week'] = None
         session['day'] = None
         session['time'] = None
         session['classroom'] = None
         session['subject'] = None
 
-
     return render_template('order.html', order = order)
+
+
+def calculate_date(week,day):
+    firstday = datetime(2016, 2, 29)
+     
+    week_dict ={'第一周':1,'第二周':2,'第三周':3,'第四周':4,'第五周':5,'第六周':6,'第七周':7,'第八周':8,'第九周':9,'第十周':10,'第十一周':11,'第十二周':12,'第十三周':13,'第十四周':14,'第十五周':15,'第十六周':16}
+    day_dict ={'周一':1,'周二':2,'周三':3,'周四':4,'周五':5,'周六':6,'周日':7}
+    
+    week_digit = week_dict.get(week)
+    day_digit = day_dict.get(day)
+    # days =  (week_dict-1)*7+(day_digit-1)
+    days = week_digit*7+day_digit-8
+    order_date = firstday + timedelta(days=days)
+    return order_date
+
+
+@app.route('/order/filter', methods=['get'])
+@login_required
+def filtrate_date():
+    startdate = request.form.get('startdate')
+    enddate = request.form.get('enddate')
+
+    firstday = datetime(2016, 2, 29)
+    last = datetime(2016, 3, 29)
+    orders_with_filter = Order.filter_date(firstday, last, session['username'])
+
+    return orders_with_filter
 
 
 @app.route('/wx/order/room', methods=['get'])
@@ -202,6 +233,16 @@ def get_time():
     return render_template("time.html", times=times)
 
 
-@app.route('/test/account', methods=['GET'])
-def test_account():
-    return render_template('/account.html')
+@app.route('/test/admin/login', methods=['GET'])
+def test_admin_login():
+    return render_template('/admin/admin_login.html')
+
+
+@app.route('/test/admin/user', methods=['GET'])
+def test_admin_user():
+    return render_template('/admin/admin_user.html')
+
+
+@app.route('/test/admin/order', methods=['GET'])
+def test_admin_order():
+    return render_template('/admin/admin_order.html')

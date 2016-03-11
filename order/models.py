@@ -54,12 +54,18 @@ class Order(mongo.Document):
     time = mongo.StringField()
     classroom = mongo.StringField()
     subject = mongo.StringField()
-    lesson = mongo.StringField()
-    lesson_num = mongo.StringField()
-    # order_create_time = mongo.DateTimeField()
-    # order_book_time = mongo.DateTimeField()
+    # lessons = mongo.ListField(mongo.StringField())
+    lessons = mongo.StringField()
+    # lesson_num = mongo.StringField()
+    now_date = mongo.DateTimeField()
+    order_date = mongo.DateTimeField()
     user = mongo.StringField()
 
     @classmethod
     def load_user(cls, username):
         return cls.query.filter(cls.user == username).all()
+
+    @classmethod
+    def filter_date(cls, startdate, enddate,username):
+        return cls.query.filter(cls.user == username,cls.order_date >= startdate,cls.order_date <= enddate).all()
+

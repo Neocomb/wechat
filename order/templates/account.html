@@ -7,7 +7,7 @@
   <!-- <link rel="shortcut icon" type="image/x-icon" href="/static/img/favicon.ico"> -->
 
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/base.css') }}">
   <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/daterangepicker-bs3.css') }}">
   <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
@@ -85,7 +85,7 @@
                 </i>
               </span>
               <input type="text" style="width: 200px" name="reservation" id="reservation"
-                    class="form-control" value="03/18/2013 - 03/23/2013" />
+                    class="form-control" value="02/29/2016 - 03/20/2016" />
               </div>
             </div>
           </div>
@@ -99,9 +99,9 @@
       <thead>
         <tr>
           <th>时间地点</th>
-          <th>实验类别与名称</th>
-          <th>图片</th>
-          <th>状态</th>
+          <th>实验类别</th>
+          <th>实验名称与器材图片</th>
+          <th>备注</th>
         </tr>
      </thead>
      <tbody>
@@ -111,19 +111,28 @@
             <div>{{ order.week }}</div>
             <div>{{ order.day }}</div>
             <div>{{ order.time }}</div>
+            <div>{{ order.order_date }}</div>
             <div>{{ order.classroom }}</div>
           </td>
           <td>
             <div>{{ order.subject }}</div>
-            <div>{{ order.lesson }}</div>
           </td>
-          <td><img src="{{url_for('static', filename='img/wx000%s.jpg'|format(order.lesson_num|string))}}"></td>
-          <td>删除</td>
+          
+          <td>    
+            {% for item in order.lessons.split(",") %}
+            <div >{{ item.split("/")[0] }}
+            </div>
+            <img style="padding-bottom:30px;" src="{{url_for('static', filename='img/wx000%s.jpg'|format(item.split('/')[1]|string))}}">
+            
+            {% endfor %}
+          </td>
+          
+          <td>无</td>
         </tr>
         {% endfor %}
-        
       </tbody>
     </table>
+    <button onclick="dosomething()">test</button>
   </div>
 
   <script type="text/javascript">
@@ -131,8 +140,40 @@
       $('#reservation').daterangepicker(null,
       function(start, end, label) {
         console.log(start.toISOString(), end.toISOString(), label);
+        $.post('/order/filter',
+        { 
+          'startdate':start,
+          'enddate':end,
+        },
+        function(data){
+          if(data){
+            alert(data);
+          } 
+          else{
+            alert("未查询到");
+          }
+        });
       });
     });
+
+    function dosomething(){
+      var start = "test"
+      var end = "test"
+      $.get('/order/filter',
+        { 
+          'startdate':start,
+          'enddate':end,
+        },
+        function(data){
+          if(data){
+            alert(data);
+          } 
+          else{
+            alert("未查询到");
+          }
+        });
+      }
+
   </script>
 </body>
 
