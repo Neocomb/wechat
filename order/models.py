@@ -11,6 +11,10 @@ class User(mongo.Document):
     ctime = mongo.DateTimeField(default=datetime.now())
 
     primary_key = Index().ascending(username).unique(True)
+    
+    @classmethod
+    def load_all(cls):
+        return cls.query.all()
 
     @classmethod
     def load_one(cls, username, password):
@@ -62,10 +66,19 @@ class Order(mongo.Document):
     user = mongo.StringField()
 
     @classmethod
+    def load_all(cls):
+        return cls.query.all()
+
+    @classmethod
     def load_user(cls, username):
         return cls.query.filter(cls.user == username).all()
 
     @classmethod
     def filter_date(cls, startdate, enddate,username):
-        return cls.query.filter(cls.user == username,cls.order_date >= startdate,cls.order_date <= enddate).all()
-
+        if username is '':
+            return cls.query.filter(cls.order_date >= startdate,cls.order_date <= enddate).all()
+        else:
+            return cls.query.filter(cls.user == username,cls.order_date >= startdate,cls.order_date <= enddate).all()
+       
+            
+        

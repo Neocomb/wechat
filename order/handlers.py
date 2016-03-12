@@ -5,6 +5,7 @@ from flask import abort, session, redirect, url_for
 from functools import wraps
 from datetime import * 
 import time 
+import pprint
 
 def login_required(f):
     @wraps(f)
@@ -172,77 +173,71 @@ def calculate_date(week,day):
 @app.route('/order/filter', methods=['get'])
 @login_required
 def filtrate_date():
-    startdate = request.form.get('startdate')
-    enddate = request.form.get('enddate')
+    startdate = request.args.get('startdate')[0:10]
+    enddate = request.args.get('enddate')[0:10]
 
-    firstday = datetime(2016, 2, 29)
-    last = datetime(2016, 3, 29)
-    orders_with_filter = Order.filter_date(firstday, last, session['username'])
+    x = datetime.utcfromtimestamp(float(startdate))
+    y = datetime.utcfromtimestamp(float(enddate))
+    
+    orders_with_filter = Order.filter_date(x, y, session['username'])
 
-    return orders_with_filter
-
-
-@app.route('/wx/order/room', methods=['get'])
-@login_required
-def get_room():
-    building = request.args.get("building")
-
-    if not building:
-        rooms = Room.load_all()
-    else:
-        rooms = Room.load_by_building(building)
-
-    subs = set()
-    for room in Room.load_all():
-        subs.add(room.building)
-
-    return render_template("rooms.html", rooms=rooms, buildings=subs)
+    return render_template("account.html",orders=orders_with_filter)
 
 
-@app.route('/wx/order/lesson', methods=['get'])
-@login_required
-def get_lesson():
-    subject = request.args.get("subject")
-    time = request.args.get("time")
 
-    if time:
-        session['time'] = time
-
-    if not subject:
-        lessons = Lesson.load_all()
-    else:
-        lessons = Lesson.load_by_subject(subject)
-
-    subs = set()
-    for les in Lesson.load_all():
-        subs.add(les.subject)
-
-    return render_template("lesson.html", lessons=lessons, subjects=subs)
-
-
-@app.route('/wx/order/time')
-@login_required
-def get_time():
-    place = request.args.get("place")
-    if place:
-        session['place'] = place
-
-    times = [
-        "第一节","第二节","第三节","第四节","第五节","第六节","第七节",
-    ]
-    return render_template("time.html", times=times)
-
-
-@app.route('/test/admin/login', methods=['GET'])
-def test_admin_login():
+@app.route('/admin/login', methods=['GET'])
+def admin_login():
     return render_template('/admin/admin_login.html')
 
 
-@app.route('/test/admin/user', methods=['GET'])
-def test_admin_user():
-    return render_template('/admin/admin_user.html')
+@app.route('/admin/login', methods=['POST'])
+def admin_login_post():
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if not username or not password:
+        abort(400)
+
+    if User.load_one(username, password):
+        session['username'] = username
+        return redirect('/admin/user')
+    else:
+        return redirect('/admin/user')
 
 
-@app.route('/test/admin/order', methods=['GET'])
-def test_admin_order():
-    return render_template('/admin/admin_order.html')
+@app.route('/admin/logout')
+def admin_logout():
+    if 'username' in session:
+        session.pop('username', None)
+        return render_template('/admin/admin_login.html')
+    else:
+        return render_template('/admin/admin_login.html')
+
+
+@app.route('/admin/order', methods=['get'])
+@login_required
+def admin_order():
+    startdate = request.args.get('startdate')
+    enddate = request.args.get('enddate')
+    username = request.args.get('username')
+    users = User.load_all()
+
+    if username:
+        pprint.pprint(username)
+        orders = Order.load_user(username)
+        pprint.pprint(orders)
+    elif startdate:
+        pprint.pprint(startdate)
+        x = datetime.utcfromtimestamp(float(startdate[0:10]))
+        y = datetime.utcfromtimestamp(float(enddate[0:10]))
+        orders = Order.filter_date(x, y,'')
+    else:
+        orders = Order.load_all()
+    return render_template("admin/admin_order.html", orders=orders,users=users)
+
+
+@app.route('/admin/user', methods=['get'])
+@login_required
+def admin_user():
+    users = User.load_all()
+    return render_template("admin/admin_user.html", users=users)

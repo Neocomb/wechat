@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block main %}
-<form class="form-signin" action="" method="post">
+<form class="form-signin" action="{{ url_for('admin_login',action='login') }}" method="post">
       <h2 class="form-signin-heading">管理员入口</h2>
       <label for="username" class="sr-only">username</label>
       <input type="text" name="username" class="form-control" placeholder="用户名" required autofocus>

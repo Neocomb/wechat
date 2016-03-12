@@ -85,7 +85,8 @@
                 </i>
               </span>
               <input type="text" style="width: 200px" name="reservation" id="reservation"
-                    class="form-control" value="02/29/2016 - 03/20/2016" />
+                    class="form-control" value="02/29/2016 - 07/20/2016" />
+                    <a style="margin-left:20px;" href=" " id ="test">查询</a>
               </div>
             </div>
           </div>
@@ -132,48 +133,20 @@
         {% endfor %}
       </tbody>
     </table>
-    <button onclick="dosomething()">test</button>
+<!-- <button onclick="dosomething()">test</button> -->
+    
   </div>
 
   <script type="text/javascript">
     $(document).ready(function() {
       $('#reservation').daterangepicker(null,
       function(start, end, label) {
-        console.log(start.toISOString(), end.toISOString(), label);
-        $.post('/order/filter',
-        { 
-          'startdate':start,
-          'enddate':end,
-        },
-        function(data){
-          if(data){
-            alert(data);
-          } 
-          else{
-            alert("未查询到");
-          }
-        });
+        console.log(start, end);
+
+        var href = "/order/filter?startdate="+start+"&enddate="+end;
+        document.getElementById("test").setAttribute("href",href); 
       });
     });
-
-    function dosomething(){
-      var start = "test"
-      var end = "test"
-      $.get('/order/filter',
-        { 
-          'startdate':start,
-          'enddate':end,
-        },
-        function(data){
-          if(data){
-            alert(data);
-          } 
-          else{
-            alert("未查询到");
-          }
-        });
-      }
-
   </script>
 </body>
 

@@ -1,100 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>后台管理 - 大学物理随堂演示实验预约系统</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/sb-admin.css') }}">
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>后台管理 - 大学物理随堂演示实验预约系统</title>
+<!-- Bootstrap Core CSS -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/sb-admin.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='font-awesome/css/font-awesome.min.css') }}">
+  <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/daterangepicker-bs3.css') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/moment.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/daterangepicker.js') }}"></script>
+<style>
+.form-control{
+    width:80%;
+    float:left;
+}
+.check-btn{
+    margin-left:10px;
+}
+.well{
+   width: 80%;
+   margin-top: 20px; 
+   float:left;
+   padding:0;
+}
+.checkbydate-btn{
+    margin-top: 20px; 
+}
+    
+</style>
 </head>
-
 <body>
-
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">后台管理系统</a>
-            </div>
-            <!-- Top Menu Items -->
-            <ul class="nav navbar-right top-nav">
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{session.username}} <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
-            <div class="collapse navbar-collapse navbar-ex1-collapse">
-                <ul class="nav navbar-nav side-nav">
-                    <li >
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> 用户管理</a>
-                    </li>
-                    <li class="active">
-                        <a href="index.html"><i class="fa fa-fw fa-dashboard"></i> 预约记录管理</a>
-                    </li>
-                    
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </nav>
-
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <!-- Page Heading -->
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">
-                            预约管理
-                            <small>Subheading</small>
-                        </h1>
-                        <ol class="breadcrumb">
-                            <li>
-                                <i class="fa fa-dashboard"></i>  <a href="/">后台系统</a>
-                            </li>
-                            <li class="active">
-                                <i class="fa fa-file"></i> 预约管理
-                            </li>
-                        </ol>
-                    </div>
-                </div>
-                <!-- /.row -->
-            </div>
-            <!-- /.container-fluid -->
-        </div>
-        <!-- /#page-wrapper -->
+<div id="wrapper">
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">后台管理系统</a>
     </div>
-    <!-- /#wrapper -->
-</body>
+    <!-- Top Menu Items -->
+    <ul class="nav navbar-right top-nav">
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> {{session.username}} <b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li>
+            <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+            </li>
+            <li>
+            <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
+            </li>
+            <li>
+            <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
+            </li>
+            <li class="divider"></li>
+            <li>
+            <a href="{{url_for('admin_logout')}}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+            </li>
+        </ul>
+        </li>
+    </ul>
+    <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+        <ul class="nav navbar-nav side-nav">
+            <li>
+            <a href="{{url_for('admin_user')}}"><i class="fa fa-fw fa-dashboard"></i> 用户管理</a>
+            </li>
+            <li class="active">
+            <a href="{{url_for('admin_order')}}"><i class="fa fa-fw fa-dashboard"></i> 预约记录管理</a>
+            </li>
+        </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+    </nav>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">
+                            预约管理
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li>
+                        <i class="fa fa-dashboard"></i><a href="/">后台系统</a>
+                        </li>
+                        <li class="active">
+                        <i class="fa fa-file"></i> 预约管理
+                        </li>
+                    </ol>
+                    <select class="form-control" id="select_user">
+                        <option>无</option>
+                        {% for user in users%}
+                        <option>{{user.username}}</option>
+                        {% endfor %}
+                    </select>
+                    <button id="checkByUser" class="btn btn-primary check-btn"  onclick="checkbyuser()">按用户查询</button>
+                    <div class="well">
+                        <form class="form-horizontal">
+                            <fieldset>
+                                <div class="control-group"> 
+                                    <div class="controls">
+                                        <div class="input-prepend input-group">
+                                            <span class="add-on input-group-addon">
+                                                <i class="glyphicon glyphicon-calendar fa fa-calendar">
+                                                </i>
+                                            </span>
+                                            <input type="text" name="reservation" id="reservation" class="form-control" value="02/29/2016 - 07/20/2016" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div> 
+                    <a class="btn btn-primary check-btn checkbydate-btn" href=" " id ="test">按日期查询</a>
 
+                    <table class="table table-striped">
+                    <!--       <caption>预约记录</caption> -->
+                    <thead>
+                    <tr>
+                        <th>
+                            实验日期
+                        </th>
+                        <th>
+                            实验周次
+                        </th>
+                        <th>
+                            实验时间
+                        </th>
+                        <th>
+                            实验地点
+                        </th>
+                        <th>
+                            实验类别
+                        </th>
+                        <th>
+                            实验名称与器材图片
+                        </th>
+                        <th>
+                            预约记录日期
+                        </th>
+                        <th>
+                            预约人
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>
+                            <div>
+                                {{ order.order_date }}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                {{ order.week }} {{ order.day }}
+                            </div>
+                            <div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                {{ order.time }}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                {{ order.classroom }}
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                {{ order.subject }}
+                            </div>
+                        </td>
+                        <td>
+                            {% for item in order.lessons.split(",") %}
+                            <div>
+                                {{ item.split("/")[0] }}
+                            </div>
+                            <img style="padding-bottom:30px;width:80px;" src="{{url_for('static', filename='img/wx000%s.jpg'|format(item.split('/')[1]|string))}}">
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {{order.now_date}}
+                        </td>
+                        <td>
+                            {{order.user}}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+<script type="text/javascript">
+  function checkbyuser() {
+    var username = $('#select_user option:selected').text();
+    console.log(username);
+    location.href = "/admin/order?username="+username;
+  }
+
+  $(document).ready(function() {
+      $('#reservation').daterangepicker(null,
+      function(start, end, label) {
+        console.log(start, end);
+
+        var href = "/admin/order?startdate="+start+"&enddate="+end;
+        document.getElementById("test").setAttribute("href",href); 
+      });
+    });
+</script>
+
+</body>
 </html>
