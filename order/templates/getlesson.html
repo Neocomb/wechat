@@ -84,7 +84,7 @@
       <div>
         <img src="{{ url_for('static',filename='img/wx000%s.jpg'|format(les.num|string) ) }}">
       </div>
-      <input type="checkbox" value="{{ les.name }}" id="{{les.num}}"  name="lesson"/>{{ les.name }}
+      <input type="checkbox" value="{{ les.name }}" id="{{les.num}}" style="zoom:300%" name="lesson"/>{{ les.name }}
     </div>
     {% endfor %}
 
