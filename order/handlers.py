@@ -4,8 +4,7 @@ from flask import render_template, request, jsonify
 from flask import abort, session, redirect, url_for
 from functools import wraps
 from datetime import * 
-import time 
-import pprint
+import time
 
 def login_required(f):
     @wraps(f)
@@ -223,11 +222,11 @@ def admin_order():
     users = User.load_all()
 
     if username:
-        pprint.pprint(username)
+        # pprint.pprint(username)
         orders = Order.load_user(username)
-        pprint.pprint(orders)
+        # pprint.pprint(orders)
     elif startdate:
-        pprint.pprint(startdate)
+        # pprint.pprint(startdate)
         x = datetime.utcfromtimestamp(float(startdate[0:10]))
         y = datetime.utcfromtimestamp(float(enddate[0:10]))
         orders = Order.filter_date(x, y,'')
