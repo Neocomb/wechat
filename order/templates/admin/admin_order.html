@@ -98,6 +98,7 @@
                         <i class="fa fa-file"></i> 预约管理
                         </li>
                     </ol>
+                    <div>
                     <select class="form-control" id="select_user">
                         <option>无</option>
                         {% for user in users%}
@@ -105,6 +106,8 @@
                         {% endfor %}
                     </select>
                     <button id="checkByUser" class="btn btn-primary check-btn"  onclick="checkbyuser()">按用户查询</button>
+                    </div>
+                    <div>
                     <div class="well">
                         <form class="form-horizontal">
                             <fieldset>
@@ -123,7 +126,7 @@
                         </form>
                     </div> 
                     <a class="btn btn-primary check-btn checkbydate-btn" href=" " id ="test">按日期查询</a>
-
+                    </div>
                     <table class="table table-striped">
                     <!--       <caption>预约记录</caption> -->
                     <thead>
