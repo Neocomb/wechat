@@ -42,7 +42,7 @@ def user_register_post():
     password = request.form.get('password')
 
     if not username or not password:
-        abort(400)
+        return redirect('/order/user')
 
     user = User(username=username, password=password)
     user.save()
@@ -55,7 +55,7 @@ def user_login_post():
     password = request.form.get('password')
 
     if not username or not password:
-        abort(400)
+        return redirect('/order/user')
 
     if User.load_one(username, password):
         session['username'] = username
@@ -195,7 +195,7 @@ def admin_login_post():
     password = request.form.get('password')
 
     if not username or not password:
-        abort(400)
+        return redirect('/admin/user')
 
     if User.load_one(username, password):
         session['username'] = username
