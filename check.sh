@@ -1,8 +1,7 @@
 #!/bin/bash
-curl -G -m 2 localhost
+curl -G -m 2 http://www.wlysstyy.cn/
 if [ $? != 0  ]
 then
-    echo "restart wechat"
-    su wechat
-    . ./start.sh >> check.log 2>&1 &
+    ssh root@139.129.6.17
+    /root/source/wechat/start.sh
 fi
