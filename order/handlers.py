@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
 from order.models import User, Lesson, Room, Order
 from order.webapp import app
 from flask import render_template, request, jsonify

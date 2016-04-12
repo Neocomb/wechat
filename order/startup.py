@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
 from order import webapp
 
 if __name__ == '__main__':

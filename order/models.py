@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# encoding: utf-8
+
 from datetime import datetime
 from flask_mongoalchemy import MongoAlchemy
 from mongoalchemy.document import Index
